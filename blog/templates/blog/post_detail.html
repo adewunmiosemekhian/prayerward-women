@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }} - Colorful Blog{% endblock %}
+
+{% block content %}
+    <article class="post-card">
+        <div class="post-header">
+            <h2 class="post-title">{{ post.title }}</h2>
+            <div class="post-meta">
+                <span>Posted on: {{ post.created_at|date:"M d, Y" }}</span>
+                <span>Last updated: {{ post.updated_at|date:"M d, Y" }}</span>
+                {% if post.categories.all %}
+                    <span>Categories:
+                        {% for category in post.categories.all %}
+                            <span style="color: {{ category.color }};">{{ category.name }}</span>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="post-content">
+            {{ post.content|linebreaks }}
+        </div>
+    </article>
+
+    <div class="comment-section">
+        <h3>Comments ({{ comments.count }})</h3>
+
+        {% for comment in comments %}
+            <div class="comment">
+                <div class="comment-author">{{ comment.author }}</div>
+                <div class="comment-date">{{ comment.created_at|date:"M d, Y" }}</div>
+                <p>{{ comment.content|linebreaks }}</p>
+            </div>
+        {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+
+        <h3>Add a Comment</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.author }}
+            </div>
+            <div class="form-group">
+                {{ form.content }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+        </form>
+    </div>
+
+    <div style="margin-top: 1rem;">
+        <a href="{% url 'post_list' %}">← Back to all posts</a>
+    </div>
+{% endblock %}

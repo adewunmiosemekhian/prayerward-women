@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Categories - PrayerWord Women{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="post-card">
+        <div class="post-header">
+            <h2 class="post-title">Categories</h2>
+        </div>
+        <div class="post-content">
+            <p>Browse our content by category to find exactly what you're looking for:</p>
+            
+            <div class="categories-grid">
+                {% for category in categories %}
+                    <a href="{% url 'post_list' %}?category={{ category.id }}" class="category-card" style="text-decoration: none;">
+                        <div class="category-icon" style="color: {{ category.color }};">📖</div>
+                        <h3 class="category-name">{{ category.name }}</h3>
+                        <div class="category-count">{{ category.post_set.count }} post{{ category.post_set.count|pluralize }}</div>
+                    </a>
+                {% empty %}
+                    <p>No categories yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

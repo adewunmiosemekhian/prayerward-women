@@ -1,0 +1,47 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="main-content">
+        <h2 style="text-align: center; margin-bottom: 2rem; color: var(--dark); font-family: 'Georgia', serif;">
+            {% if selected_category %}
+                {% for category in all_categories %}
+                    {% if category.id == selected_category %}
+                        Posts in {{ category.name }}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                Latest Posts
+            {% endif %}
+        </h2>
+
+        {% for post in posts %}
+            <article class="post-card">
+                <div class="post-header">
+                    <h2 class="post-title">
+                        <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                    </h2>
+                    <div class="post-meta">
+                        <span>Posted on: {{ post.created_at|date:"M d, Y" }}</span>
+                        {% if post.categories.all %}
+                            <span>Categories:
+                                {% for category in post.categories.all %}
+                                    <span style="color: {{ category.color }}; font-weight: bold;">{{ category.name }}</span>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-excerpt">{{ post.content|truncatewords:40 }}</p>
+                    <a href="{% url 'post_detail' pk=post.pk %}" class="read-more">Read more →</a>
+                </div>
+            </article>
+        {% empty %}
+            <div class="post-card">
+                <div class="post-content" style="text-align: center;">
+                    <p style="font-size: 1.2rem; color: #666;">No posts yet. Check back soon for inspiring content!</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

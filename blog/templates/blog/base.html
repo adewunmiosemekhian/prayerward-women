@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PrayerWord Women{% endblock %}</title>
+    <style>
+        :root {
+            --primary: #8B4513; /* SaddleBrown - earthy tone */
+            --secondary: #6B8E23; /* OliveDrab - natural green */
+            --success: #228B22; /* ForestGreen */
+            --info: #4169E1; /* RoyalBlue */
+            --warning: #DAA520; /* GoldenRod */
+            --danger: #B22222; /* FireBrick */
+            --light: #F5F5F5; /* WhiteSmoke */
+            --dark: #4B0082; /* Indigo */
+            --cream: #FFFDD0; /* Cream */
+            --gold: #D4AF37; /* Gold */
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #FAF9F6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Top contact bar */
+        .contact-bar {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--gold);
+        }
+
+        .contact-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            background: linear-gradient(135deg, var(--dark) 0%, #5a1f7a 100%);
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 0;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-bottom-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-bottom-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 1rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 2px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .blog-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: white;
+            font-family: 'Georgia', serif;
+        }
+
+        .blog-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin: 0.5rem 0 0 0;
+            color: white;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            justify-content: center;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .category-badge:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e8e8e8;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e3e6f0;
+            background: linear-gradient(135deg, #f8f9fc 0%, #ffffff 100%);
+        }
+
+        .post-title {
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--dark);
+            font-family: 'Georgia', serif;
+        }
+
+        .post-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .post-title a:hover {
+            color: var(--primary);
+        }
+
+        .post-meta {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .post-excerpt {
+            margin-bottom: 1rem;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--dark);
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 500;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 25px;
+            background-color: var(--primary);
+            border: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #6B3410;
+            transform: translateY(-2px);
+        }
+
+        .comment-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8e8e8;
+        }
+
+        .comment {
+            padding: 1.5rem;
+            border-left: 4px solid var(--gold);
+            background-color: #FFF9E6;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .comment-date {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #333;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #d1d3e2;
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .form-control:focus {
+            border-color: var(--gold);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            color: #666;
+            border-top: 1px solid #e3e6f0;
+            background: linear-gradient(135deg, #f8f9fc 0%, #ffffff 100%);
+            font-family: 'Georgia', serif;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #555;
+        }
+
+        .footer-contact-item a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contact-item a:hover {
+            color: var(--primary);
+        }
+
+        .main-content {
+            min-height: 60vh;
+        }
+
+        /* Categories page styles */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e8e8e8;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-name {
+            font-size: 1.3rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--dark);
+        }
+
+        .category-count {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .blog-title {
+                font-size: 2.2rem;
+            }
+
+            .blog-subtitle {
+                font-size: 1.2rem;
+            }
+
+            /* Updated contact bar styles */
+            .contact-info {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+                font-size: 0.8rem;
+            }
+
+            .contact-item {
+                justify-content: center;
+            }
+
+            /* Updated footer contact styles */
+            .footer-contacts {
+                flex-direction: column;
+                gap: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .footer-contact-item {
+                justify-content: center;
+            }
+
+            .post-title {
+                font-size: 1.5rem;
+            }
+
+            /* Mobile menu styles */
+            .nav-container {
+                justify-content: space-between;
+                padding: 0.5rem 1rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-list {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: linear-gradient(135deg, var(--dark) 0%, #5a1f7a 100%);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+
+            .nav-list.active {
+                display: flex;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                border-left: 3px solid transparent;
+                padding: 1rem;
+            }
+
+            .nav-link:hover,
+            .nav-link.active {
+                border-left-color: var(--gold);
+                border-bottom-color: rgba(255, 255, 255, 0.1);
+            }
+
+            /* Animation for menu toggle */
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="container nav-container">
+            <ul class="nav-list" id="navList">
+                <li class="nav-item">
+                    <a href="{% url 'post_list' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'categories' %}" class="nav-link {% if request.path == '/categories/' %}active{% endif %}">
+                        Categories
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'all_posts' %}" class="nav-link {% if request.path == '/posts/' %}active{% endif %}">
+                        All Posts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.path == '/contact/' %}active{% endif %}">
+                        Contact
+                    </a>
+                </li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="blog-title"><a href="{% url 'post_list' %}" style="color: white; text-decoration: none;">PrayerWord Women</a></h1>
+                <p class="blog-subtitle">...prayer and the Word...</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-contacts">
+                    <div class="footer-contact-item">
+                        <span>📞</span>
+                        <a href="tel:+2348100816934">08100816934</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span>💬</span>
+                        <a href="https://wa.me/2348100816934" target="_blank">WhatsApp: 08100816934</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span>✉️</span>
+                        <a href="mailto:prayerwordwomen@gmail.com">prayerwordwomen@gmail.com</a>
+                    </div>
+                </div>
+                <p>&copy; 2025 Adewunmi Ehilen | All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navList = document.getElementById('navList');
+
+            menuToggle.addEventListener('click', function() {
+                navList.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Close menu when clicking on a link (for mobile)
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navList.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                });
+            });
+
+            // Close menu when clicking outside (for mobile)
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 &&
+                    navList.classList.contains('active') &&
+                    !event.target.closest('.nav-container')) {
+                    navList.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+
+            // Close menu on window resize if it becomes desktop view
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navList.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
