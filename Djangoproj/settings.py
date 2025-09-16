@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-99w)xq4=vz8l(*+eqz)giz*ay#oo1z3n1$x6ubgpf+@$a)h7ks
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['prayerword-women.onrender.com','localhost', '127.0.0.1']
 
 
 # Application definition
